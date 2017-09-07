@@ -19,7 +19,7 @@ public class Configuration {
 
     @Bean
     @Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
-    public org.springframework.integration.transformer.Transformer decodingPayloadTransformer() {
+    public org.springframework.integration.transformer.Transformer transformer() {
         return (msg) -> {
             simulateLongRunningOperation();
             return msg;
