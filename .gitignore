@@ -6,5 +6,3 @@ target
 .recommenders
 .idea
 *.iml
-application.properties
-application-sandbox.properties
