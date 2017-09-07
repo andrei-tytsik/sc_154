@@ -1,0 +1,10 @@
+.settings
+target
+.classpath
+.project
+.metadata
+.recommenders
+.idea
+*.iml
+application.properties
+application-sandbox.properties
