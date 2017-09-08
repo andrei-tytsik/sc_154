@@ -3,6 +3,8 @@
  */
 package sc_154;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -17,22 +19,27 @@ public class Configuration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
 
+    private final AtomicInteger msgCount = new AtomicInteger(0);
+
     @Bean
     @Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
     public org.springframework.integration.transformer.Transformer transformer() {
         return (msg) -> {
-            simulateLongRunningOperation();
+            simulateMessageHandling();
             return msg;
         };
     }
 
-    private void simulateLongRunningOperation() {
-        LOGGER.info("Simulating long-running operation");
-        try {
-            Thread.sleep(30_000);
-        } catch (InterruptedException ie) {
-            // ignore
+    private void simulateMessageHandling() {
+        if (msgCount.get() < 5) {
+            LOGGER.info("Simulating long-running logic...");
+            try {
+                Thread.sleep(30_000);
+            } catch (InterruptedException ie) {
+                // ignore
+            }
         }
+        LOGGER.info("Message handled, total count = {}", msgCount.incrementAndGet());
     }
 
 }
